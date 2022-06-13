@@ -1,0 +1,42 @@
+<div class="container mt-5 w-50">
+  <img src="assets/img/busyqa.png" alt="busyQA logo">
+  <div class="alert  alert-dismissible fade show mt-2" role="alert" *ngIf= "show" 
+  [ngClass]= "mode=='added'? 'alert-success': 'alert-danger'">
+  <span>Task <strong>{{ mode }}</strong> successfully!</span>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+  <div class="jumbotron bg-white border border-primary mt-3 py-5">
+    <form #postForm = "ngForm" (ngSubmit)="onAddTask(postForm.value); postForm.resetForm()">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Task name</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Type in the task" name="name" [(ngModel)]= "task.name" required>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit" [disabled]= "!postForm.valid">Add Task</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <table class="table table-striped table-hover mt-3">
+    <caption>To-do list</caption>
+    <thead>
+      <tr class="text-center">
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">#</th>       
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor= "let task of tasks, let i = index" [ngClass]="i % 2==0?'text-success':'text-primary'">
+        <td class="text-center align-middle">{{ i+1 }}</td>
+        <td class="align-middle">{{ task.name | uppercase }}</td>
+        <td class="text-center">
+          <button class="btn btn-danger btn-sm" type="button" (click)="onRemove(i)">Remove</button>
+        </td>
+      </tr>
+     </tbody>
+  </table>
+</div> 
